@@ -1,0 +1,19 @@
+{
+  "name": "congress-trading-site",
+  "version": "1.0.0",
+  "description": "Congress Trading Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanyboy271/congress-trades.git"
+  },
+  "author": "Sean Kotrola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanyboy271/congress-trades/issues"
+  },
+  "homepage": "https://github.com/seanyboy271/congress-trades#readme"
+}
