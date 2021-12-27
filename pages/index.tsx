@@ -1,38 +1,25 @@
-import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import { useEffect } from "react";
+import { loadHouseData } from "../state/house/house.actions";
+import { RootState } from "../state";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home: NextPage = () => {
-
-  const [senateData,setSenateData] = useState<any[]>()
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state);
 
   useEffect(() => {
-    getData();
-    console.log('here')
+    dispatch(loadHouseData());
   }, []);
-
-  const getData = async () => {
-    const response = await fetch('http://localhost:8080/get_senate_data');
-    const data = await response.json();
-    console.log(data)
-    setSenateData(data.entries)
-  }
 
   return (
     <div>
-      {
-        senateData && senateData.map(elem => {
-          return (
-            <div key={elem.senator}>
-              {elem.amount}
-            </div>
-          )
-        })
-      }
+      {state.house.data.length > 0 &&
+        state.house.data.map((elem) => {
+          return <div key={elem.amount}>{elem.amount}</div>;
+        })}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
