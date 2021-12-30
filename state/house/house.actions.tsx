@@ -10,7 +10,7 @@ export const loadHouseData = () => async (dispatch: Dispatch) => {
     if (data.entries) {
       return dispatch(loadDataSuccess(data.entries));
     }
-  } catch (e) {
-    return dispatch(loadDataFailure(e));
+  } catch (e: any) {
+    return dispatch(loadDataFailure(e.message));
   }
 };
