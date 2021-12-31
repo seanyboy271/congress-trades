@@ -11,6 +11,7 @@ import {
   Text,
   Spinner,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state";
@@ -18,10 +19,11 @@ import { loadHouseData } from "../../state/house/house.actions";
 import { loadSenateData } from "../../state/senate/senate.actions";
 
 export const ErrorModal = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const state = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     onOpen();
@@ -37,12 +39,12 @@ export const ErrorModal = () => {
     if (state.house.error) dispatch(loadHouseData());
   };
 
-  const refresh = () => {
-    window.location.reload();
+  const refreshPage = () => {
+    router.reload();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={refreshPage}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Oh No!</ModalHeader>
@@ -56,7 +58,7 @@ export const ErrorModal = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={refresh}>
+          <Button colorScheme="blue" mr={3} onClick={refreshPage}>
             Close
           </Button>
           <Button variant="ghost" onClick={refreshData}>
