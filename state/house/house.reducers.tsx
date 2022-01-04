@@ -3,7 +3,7 @@ import { HouseEntry } from "../../models/data";
 
 export const houseReducers = {
   loadDataSuccess: (state: HouseState, action: PayloadAction<HouseEntry[]>) => {
-    state.data = action.payload as any;
+    state.data = action.payload;
     state.error = null;
     state.loading = false;
   },

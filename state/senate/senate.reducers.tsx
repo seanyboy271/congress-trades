@@ -6,7 +6,7 @@ export const senateReducers = {
     state: senateState,
     action: PayloadAction<SenateEntry[]>
   ) => {
-    state.data = action.payload as any;
+    state.data = action.payload;
     state.error = null;
     state.loading = false;
   },

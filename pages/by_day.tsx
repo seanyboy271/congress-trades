@@ -3,12 +3,7 @@ import { NextPage } from "next";
 import { NavBar } from "../components/shared/navbar.component";
 
 const By_Day: NextPage = () => {
-  return (
-    <>
-      <NavBar></NavBar>
-      Day
-    </>
-  );
+  return <>Day</>;
 };
 
 export default By_Day;

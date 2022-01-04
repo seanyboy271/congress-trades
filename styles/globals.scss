@@ -1,5 +1,21 @@
+$mobile: 480.5px;
+$tablet: 768.5px;
+
+@mixin media-breakpoint-down($width) {
+  @media screen and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-up($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
 html,
 body {
+  height: 100vh;
+  width: 100vw;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,

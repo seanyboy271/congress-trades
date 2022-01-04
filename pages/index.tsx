@@ -7,7 +7,12 @@ import { LoadingScreen } from "../components/shared/loading-screen.component";
 import { loadSenateData } from "../state/senate/senate.actions";
 import { ErrorModal } from "../components/shared/error-modal.component";
 import { Home } from "../components/home/home.component";
-import { isLoading, hasSenateData, hasHouseData } from "../state/utils";
+import {
+  isLoading,
+  hasSenateData,
+  hasHouseData,
+  hasError,
+} from "../state/utils";
 
 const Index: NextPage = () => {
   const state = useSelector((state: RootState) => state);
@@ -25,7 +30,7 @@ const Index: NextPage = () => {
   }, [state]);
 
   return (
-    <React.Fragment>
+    <>
       {/* Loading screen */}
       {loading && <LoadingScreen></LoadingScreen>}
 
@@ -33,8 +38,8 @@ const Index: NextPage = () => {
       {!loading && <Home></Home>}
 
       {/* Error modals */}
-      {(state.house.error || state.senate.error) && <ErrorModal></ErrorModal>}
-    </React.Fragment>
+      {hasError(state) && <ErrorModal></ErrorModal>}
+    </>
   );
 };
 

@@ -1,11 +1,17 @@
-import { Flex, Link, Center, Container } from "@chakra-ui/react";
+import { Flex, Link, Center } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link";
 
 export const NavBar = () => {
   return (
-    <Center height="3.5rem">
-      <Flex direction={"row"} justify={"space-between"} flex={"0.5"}>
+    <Center bg={"gray.300"} flex={"0.07"}>
+      <Flex
+        textAlign={"center"}
+        direction={"row"}
+        justify={"space-between"}
+        flex={"0.5"}
+        gap={"5%"}
+      >
         <NextLink href="/by_day" passHref>
           <Link>Summary By Day</Link>
         </NextLink>

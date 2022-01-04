@@ -9,7 +9,7 @@ export const loadHouseData = () => async (dispatch: Dispatch) => {
     const res = await fetch(url);
     const data = await res.json();
     if (data.entries) {
-      return dispatch(loadDataSuccess(data.entries));
+      return dispatch(loadDataSuccess(data));
     }
   } catch (e: any) {
     return dispatch(loadDataFailure(e.message));

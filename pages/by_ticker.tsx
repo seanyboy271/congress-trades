@@ -3,12 +3,7 @@ import { NextPage } from "next";
 import { NavBar } from "../components/shared/navbar.component";
 
 const By_Ticker: NextPage = () => {
-  return (
-    <>
-      <NavBar></NavBar>
-      Ticker
-    </>
-  );
+  return <>Ticker</>;
 };
 
 export default By_Ticker;

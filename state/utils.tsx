@@ -9,7 +9,7 @@ export const hasData = (state: RootState) => {
 };
 
 export const hasError = (state: RootState) => {
-  return !!state.house.error && !!state.senate.error;
+  return !!state.house.error || !!state.senate.error;
 };
 
 export const hasSenateData = (state: RootState) => {
