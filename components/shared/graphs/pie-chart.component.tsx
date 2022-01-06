@@ -1,51 +1,44 @@
-import { Box, Container } from "@chakra-ui/react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { useEffect } from "react";
+import {
+  PieChart,
+  Pie,
+  Sector,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 
-const PieGraph = ({ flex = "1" }) => {
-  const data01 = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 },
-  ];
-  const data02 = [
-    { name: "A1", value: 100 },
-    { name: "A2", value: 300 },
-    { name: "B1", value: 100 },
-    { name: "B2", value: 80 },
-    { name: "B3", value: 40 },
-    { name: "B4", value: 30 },
-    { name: "B5", value: 50 },
-    { name: "C1", value: 100 },
-    { name: "C2", value: 200 },
-    { name: "D1", value: 150 },
-    { name: "D2", value: 50 },
-  ];
+const PieGraph = ({ flex = "1", data }: any) => {
+  const generateColor = (indx: number) => {
+    const start = parseInt("8A8A8A", 16);
+    const end = parseInt("D9D9D9", 16);
+
+    const delta = Math.floor(start / data.length);
+
+    const color = start + delta * indx;
+
+    return `#${color.toString(16)}`;
+  };
+
   return (
-    <Container flex={flex}>
-      <ResponsiveContainer width={"100%"} height={"100%"}>
-        <PieChart>
-          <Pie
-            data={data01}
-            dataKey="value"
-            cx="50%"
-            cy="50%"
-            outerRadius={60}
-            fill="#8884d8"
-          />
-          <Pie
-            data={data02}
-            dataKey="value"
-            cx="50%"
-            cy="50%"
-            innerRadius={70}
-            outerRadius={90}
-            fill="#82ca9d"
-            label
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    </Container>
+    <ResponsiveContainer width={"100%"}>
+      <PieChart>
+        <Pie
+          data={data}
+          nameKey="name"
+          dataKey="value"
+          outerRadius={140}
+          fill="#8884d8"
+        >
+          {data.map((entry: any, index: any) => (
+            <Cell key={`cell-${index}`} fill={generateColor(index)} />
+          ))}
+        </Pie>
+        <Tooltip />
+        <Legend />
+      </PieChart>
+    </ResponsiveContainer>
   );
 };
 

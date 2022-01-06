@@ -13,15 +13,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <RouteGuard></RouteGuard>
         <Flex direction={"column"} height={"100vh"}>
           <NavBar></NavBar>
-          <Container
+          <Box
             flex={"1"}
             maxW={"100vw"}
             bg={"green.100"}
             margin={"0 0 0 0"}
-            padding={"2% 0 0 5%"}
+            padding={"2% 4% 2% 4%"}
           >
             <Component {...pageProps} />
-          </Container>
+          </Box>
         </Flex>
       </ChakraProvider>
     </Provider>
