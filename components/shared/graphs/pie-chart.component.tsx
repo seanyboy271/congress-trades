@@ -14,7 +14,7 @@ const PieGraph = ({ flex = "1", data }: any) => {
     const start = parseInt("8A8A8A", 16);
     const end = parseInt("D9D9D9", 16);
 
-    const delta = Math.floor(start / data.length);
+    const delta = Math.floor((start - end) / data.length);
 
     const color = start + delta * indx;
 
@@ -28,7 +28,7 @@ const PieGraph = ({ flex = "1", data }: any) => {
           data={data}
           nameKey="name"
           dataKey="value"
-          outerRadius={140}
+          outerRadius={120}
           fill="#8884d8"
         >
           {data.map((entry: any, index: any) => (

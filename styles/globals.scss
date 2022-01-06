@@ -30,3 +30,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+[id^="gridSquare"] {
+  aspect-ratio: 1;
+}

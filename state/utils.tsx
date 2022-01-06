@@ -1,4 +1,5 @@
 import { RootState } from ".";
+import { SenateEntry } from "../models/data";
 
 export const isLoading = (state: RootState) => {
   return state.house.loading || state.senate.loading;
@@ -38,4 +39,48 @@ export const getPieChartData = (state: RootState) => {
     });
   }
   return dataArr;
+};
+
+export const getPieChartDataByDate = (state: RootState, date: Date) => {
+  let dataArr: { name: string; value: number | undefined }[] = [];
+  if (state.senate.data) {
+    let todayTransactions = filterByDate(state, date);
+    let names = new Set<string>();
+    todayTransactions?.forEach((elem) => {
+      names.add(elem.senator);
+    });
+    names.forEach((name) => {
+      let numTransactions = todayTransactions?.filter(
+        (elem: { senator: string }) => elem.senator == name
+      )?.length;
+      dataArr.push({ name, value: numTransactions });
+    });
+  }
+  return dataArr;
+};
+
+export const getNamesByDate = (state: RootState, date: Date) => {
+  const allTransArr = state.senate.data?.filter((elem) => {
+    const tdate = new Date(elem.transaction_date);
+    return (
+      tdate.getFullYear() === date.getFullYear() &&
+      tdate.getDate() === date.getDate() &&
+      tdate.getMonth() === date.getMonth()
+    );
+  });
+  return allTransArr?.reduce((prev: SenateEntry[], curr: SenateEntry) => {
+    if (!prev.find((elem) => elem.senator == curr.senator)) prev.push(curr);
+    return prev;
+  }, []);
+};
+
+export const filterByDate = (state: RootState, date: Date) => {
+  return state.senate.data?.filter((elem) => {
+    const tdate = new Date(elem.transaction_date);
+    return (
+      tdate.getFullYear() === date.getFullYear() &&
+      tdate.getDate() === date.getDate() &&
+      tdate.getMonth() === date.getMonth()
+    );
+  });
 };
