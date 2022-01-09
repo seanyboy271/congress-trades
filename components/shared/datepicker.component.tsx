@@ -12,6 +12,7 @@ import {
   Grid,
   GridItem,
   Box,
+  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -45,6 +46,7 @@ export const DatePicker = ({ isOpen, onClose, onSubmit }: any) => {
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <Text>;alskfjdaskfdjaslfd</Text>
           <Container width="80%">
             <Grid
               gap={"1"}

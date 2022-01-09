@@ -12,7 +12,7 @@ export const NavBar = () => {
         flex={"0.5"}
         gap={"5%"}
       >
-        <NextLink href="/by_day" passHref>
+        <NextLink href="/" passHref>
           <Link>Summary By Day</Link>
         </NextLink>
         <NextLink href="/by_rep" passHref>

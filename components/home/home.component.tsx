@@ -1,48 +1,20 @@
+import { CalendarIcon } from "@chakra-ui/icons";
 import {
-  AddIcon,
-  CalendarIcon,
-  EditIcon,
-  ExternalLinkIcon,
-  HamburgerIcon,
-  RepeatIcon,
-  SearchIcon,
-} from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  filter,
   Flex,
   Grid,
   GridItem,
   Heading,
   IconButton,
   ListItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   OrderedList,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { current } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { SenateEntry } from "../../models/data";
+import { CongressData, isHouseEntry, SenateEntry } from "../../models/data";
 import { RootState } from "../../state";
-import {
-  filterByDate,
-  getNamesByDate,
-  getPieChartData,
-  getPieChartDataByDate,
-} from "../../state/utils";
+import { getMemberNamesByDate, getPieChartDataByDate } from "../../state/utils";
 import { DatePicker } from "../shared/datepicker.component";
 import PieGraph from "../shared/graphs/pie-chart.component";
 import { ShadowBox } from "../shared/shadow-bow.component";
@@ -51,14 +23,32 @@ export const Home = () => {
   const state = useSelector((state: RootState) => state);
   const datepicker = useDisclosure({ id: "daily_summary_datepicker" });
   const [currDate, setCurrDate] = useState<Date>(new Date());
-  const [senators, setSenators] = useState<SenateEntry[]>();
+  const [members, setMembers] = useState<CongressData[]>();
   const onSubmit = (currentDate: Date) => {
     setCurrDate(currentDate);
   };
 
   useEffect(() => {
-    console.log("senators", getNamesByDate(state, currDate));
-    setSenators(getNamesByDate(state, currDate));
+    if (state.senate.data && state.house.data) {
+      console.log(
+        "senators",
+        getMemberNamesByDate(
+          Array<CongressData>()
+            .concat(state.senate.data)
+            .concat(state.house.data),
+          currDate
+        )
+      );
+
+      setMembers(
+        getMemberNamesByDate(
+          Array<CongressData>()
+            .concat(state.senate.data)
+            .concat(state.house.data),
+          currDate
+        )
+      );
+    }
   }, [state, currDate]);
 
   return (
@@ -81,10 +71,18 @@ export const Home = () => {
         >
           <GridItem h="50%" colSpan={3}>
             <ShadowBox>
-              <Text fontSize={"xl"}>Senators who made trades today</Text>
+              <Text fontSize={"xl"}>
+                Members of congress who made trades today
+              </Text>
               <OrderedList padding={"0 0 0 2%"}>
-                {senators?.map((elem) => {
-                  return <ListItem>{elem.senator}</ListItem>;
+                {members?.map((elem) => {
+                  return isHouseEntry(elem) ? (
+                    <ListItem>
+                      {elem.representative} - House of Representatives
+                    </ListItem>
+                  ) : (
+                    <ListItem>{elem.senator} - Senator</ListItem>
+                  );
                 })}
               </OrderedList>
             </ShadowBox>
@@ -92,7 +90,16 @@ export const Home = () => {
           <GridItem h="50%" colSpan={6}>
             <ShadowBox>
               <PieGraph
-                data={getPieChartDataByDate(state, currDate)}
+                data={
+                  state.senate.data && state.house.data
+                    ? getPieChartDataByDate(
+                        Array<CongressData>()
+                          .concat(state.senate.data)
+                          .concat(state.house.data),
+                        currDate
+                      )
+                    : []
+                }
               ></PieGraph>
             </ShadowBox>
           </GridItem>
